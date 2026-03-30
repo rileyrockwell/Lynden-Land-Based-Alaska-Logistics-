@@ -1,1 +1,3 @@
 pass
+
+print(1)
