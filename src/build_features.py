@@ -111,6 +111,8 @@ df = df.dropna(subset=[
     "transit_time_hours"
 ])
 
+print("DEBUG 4 — After cleaning:", df.shape)
+
 # Replace infinities
 df = df.replace([float("inf"), -float("inf")], None)
 
