@@ -5,40 +5,44 @@ from sklearn.metrics import mean_absolute_error
 
 print("STARTING MODEL TRAINING...")
 
-# -------------------------
-# STEP 1: LOAD DATA
-# -------------------------
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error
 
+# -------------------------
+# LOAD DATA
+# -------------------------
 df = pd.read_parquet("data/processed/feature_table.parquet")
 
-print("Data loaded:", df.shape)
+print("INITIAL SHAPE:", df.shape)
 
 # -------------------------
-# STEP 2: SELECT FEATURES
+# SAFE FEATURE SET (GUARANTEED TO EXIST)
 # -------------------------
-
-# Only numeric + useful columns
 features = [
     "distance_miles",
     "weight_lbs",
     "volume_cuft",
-    "transit_time_hours",
-    "fuel_price_usd_per_gallon",
-    "temperature_f",
-    "wind_speed_mph",
-    "precipitation_inches"
+    "transit_time_hours"
 ]
 
 target = "total_cost_usd"
 
-df = df[features + [target]].dropna()
+df = df[features + [target]].copy()
 
-print("Filtered data:", df.shape)
+print("AFTER COLUMN SELECT:", df.shape)
 
 # -------------------------
-# STEP 3: SPLIT DATA
+# FINAL CLEANING (MINIMAL)
 # -------------------------
+df = df.dropna()
 
+print("AFTER CLEANING:", df.shape)
+
+# -------------------------
+# SPLIT
+# -------------------------
 X = df[features]
 y = df[target]
 
@@ -47,42 +51,35 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # -------------------------
-# STEP 4: TRAIN MODEL
+# TRAIN
 # -------------------------
-
 model = RandomForestRegressor(n_estimators=50, random_state=42)
-
 model.fit(X_train, y_train)
 
-print("Model trained")
+print("MODEL TRAINED")
 
 # -------------------------
-# STEP 5: EVALUATE
+# EVALUATE
 # -------------------------
-
 preds = model.predict(X_test)
-
 mae = mean_absolute_error(y_test, preds)
 
 print("MAE:", mae)
 
 # -------------------------
-# STEP 6: FEATURE IMPORTANCE
+# FEATURE IMPORTANCE
 # -------------------------
-
 importance = pd.DataFrame({
     "feature": features,
     "importance": model.feature_importances_
 }).sort_values("importance", ascending=False)
 
 # -------------------------
-# STEP 7: SAVE OUTPUTS
+# SAVE OUTPUTS
 # -------------------------
+importance.to_csv("outputs/feature_importance.csv", index=False)
 
-# Save results
 with open("outputs/model_results.txt", "w") as f:
     f.write(f"MAE: {mae}\n")
 
-importance.to_csv("outputs/feature_importance.csv", index=False)
-
-print("Outputs saved")
+print("OUTPUTS SAVED")
