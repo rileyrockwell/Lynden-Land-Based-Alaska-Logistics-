@@ -41,6 +41,8 @@ df = df.merge(
     how="left"
 )
 
+print("DEBUG 1 — After core joins:", df.shape)
+
 print("Core joins complete")
 
 # -------------------------
@@ -73,6 +75,8 @@ df = df.merge(
     how="left"
 )
 
+print("DEBUG 2 — After fuel join:", df.shape)
+
 df = df.drop(columns=["date"])
 
 print("Fuel joined")
@@ -90,6 +94,8 @@ df = df.merge(
     how="left"
 )
 
+print("DEBUG 3 — After weather join:", df.shape)
+
 df = df.drop(columns=["location_id", "date"])
 
 print("Weather joined")
@@ -105,9 +111,17 @@ df = df.dropna(subset=[
     "transit_time_hours"
 ])
 
-# Remove infinities
+# Replace infinities
 df = df.replace([float("inf"), -float("inf")], None)
-df = df.dropna()
+
+# Only drop rows missing CRITICAL fields
+df = df.dropna(subset=[
+    "distance_miles",
+    "total_cost_usd",
+    "transit_time_hours"
+])
+
+print("Rows after cleaning:", df.shape)
 
 print("Final cleaning complete")
 
