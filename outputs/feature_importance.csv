@@ -1,5 +1,13 @@
 feature,importance
-distance_miles,0.5420925777623223
-transit_time_hours,0.45598833925016297
-weight_lbs,0.0009619464802451424
-volume_cuft,0.0009571365072694582
+transit_time_hours,0.35955554587081096
+distance_miles,0.35374202046282494
+distance_cost_usd,0.28401113130574557
+fuel_cost_usd,0.0026784899706255175
+cost_per_mile,8.631625574551068e-06
+fuel_price_usd_per_gallon,1.2382648582380534e-06
+volume_cuft,1.0477277605986558e-06
+weight_lbs,1.0176867944872684e-06
+weight_per_cuft,8.770850050795413e-07
+temperature_f,0.0
+wind_speed_mph,0.0
+precipitation_inches,0.0
