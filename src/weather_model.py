@@ -10,3 +10,5 @@ for n in range(7):
 
 for n in range(1, 7):
     print(factorial(n))
+
+print(1)
