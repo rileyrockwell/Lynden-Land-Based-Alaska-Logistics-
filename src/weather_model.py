@@ -11,6 +11,7 @@ for n in range(7):
 for n in range(1, 7):
     print(factorial(n))
 
+print("God is in the books.")
 print("anna is in the books.")
 print("asf is in the books.")
 print("def(service commitment) = morality + responsibility")
