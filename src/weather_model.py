@@ -11,4 +11,8 @@ for n in range(7):
 for n in range(1, 7):
     print(factorial(n))
 
-print(1)
+print("anna is in the books.")
+print("asf is in the books.")
+print("def(service commitment) = morality + responsibility")
+print("langan is on the throne!!!")
+print("everyone can breath clean air!!!")
